@@ -3,6 +3,7 @@ import vk_api, random, shelve
 from random import randint
 from datetime import datetime, timedelta
 from reloadMusic import reloadMusic
+from photos_name import dictionary_albums
 
 
 kick_album = []
@@ -115,7 +116,7 @@ def getTime(time):
 
 
 def getPhotos(album_id):
-    print(album_id)
+    #print(album_id)
     return photos_album[album_id]
 
 
@@ -154,6 +155,7 @@ def getAllPhotos():
     for i in range(photos["count"] // 200):
         offset += 200
         addNewPhotos(vk1.method("photos.getAll", {"owner_id": -195205545, "count": 200, "offset": offset}))
+    print(photos_album)
 
 
 
@@ -173,65 +175,7 @@ def checkBan():
 
 
 def reloadPhotos():
-    global kick_album
-    global tie_album
-    global kiss_album
-    global spank_album
-    global hug_album
-    global feed_album
-    global pout_album
-    global night_album
-    global morning_album
-    global lift_album
-    global hi_album
-    global hit_album
-    global sad_album
-    global bite_album
-    global put_on_the_knees_album
-    global pat_on_the_head_album
-    global squeeze_by_cheeks_album
-    global heart_album
-    global rrrrr_album
-    global be_embarrassed_album
-    global lick_album
-    global press_album
-    global take_hand_album
-    global cling_to_album
-    global chain_album
-    global hickey_album
-    global kiss_cheek_album
-    global hug_all_album
-
     getAllPhotos()
-    kick_album = getPhotos(272136375)
-    tie_album = getPhotos(272136372)
-    kiss_album = getPhotos(272136370)
-    spank_album = getPhotos(272136367)
-    hug_album = getPhotos(272136362)
-    feed_album = getPhotos(272136359)
-    pout_album = getPhotos(272136355)
-    night_album = getPhotos(272151195)
-    morning_album = getPhotos(272151986)
-    lift_album = getPhotos(272152171)
-    hi_album = getPhotos(272151185)
-    hit_album = getPhotos(272154293)
-    sad_album = getPhotos(272171414)
-    bite_album = getPhotos(272173642)
-    put_on_the_knees_album = getPhotos(272178865)
-    pat_on_the_head_album = getPhotos(272178874)
-    squeeze_by_cheeks_album = getPhotos(272178882)
-    heart_album = getPhotos(272178918)
-    rrrrr_album = getPhotos(272178943)
-    be_embarrassed_album = getPhotos(272178945)
-    lick_album = getPhotos(272178947)
-    press_album = getPhotos(272178949)
-    take_hand_album = getPhotos(272178950)
-    cling_to_album = getPhotos(272178975)
-    chain_album = getPhotos(272197731)
-    hickey_album = getPhotos(272684195)
-    kiss_cheek_album = getPhotos(272972761)
-    hug_all_album = getPhotos(273013062)
-
 
 
 def reloadGifs():
@@ -245,16 +189,18 @@ def reloadGifs():
 
 def reloadAll():
     reloadPhotos()
+    '''
     reloadGifs()
     global audios_album
     audios_album = reloadMusic()
     print("Ready")
+    '''
 
 
-db = shelve.open("users")
-db_time = shelve.open("time")
-db_ban = shelve.open("ban")
-db_commands = shelve.open("commands_list")
+db = shelve.open("Databases/users")
+db_time = shelve.open("Databases/time")
+db_ban = shelve.open("Databases/ban")
+db_commands = shelve.open("Databases/commands_list")
 
 try_married = {}
 timer = {}
@@ -569,7 +515,6 @@ while True:
                             answer = "Я работаю на шахте"
                             if(not off): answer = "Я сейчас свободна и готова к общению)"
                             sendMessage(answer, None, None)
-
 
 
                     elif(command in married_commands and (from_id in db or from_id in db.values()) and not off):
