@@ -6,36 +6,8 @@ from reloadMusic import reloadMusic
 from photos_name import dictionary_albums
 
 
-kick_album = []
-tie_album = []
-kiss_album = []
-spank_album = []
-hug_album = []
-feed_album = []
-pout_album = []
-night_album = []
-morning_album = []
-lift_album = []
-hi_album = []
-hit_album = []
-sad_album = []
-bite_album = []
-put_on_the_knees_album = []
-pat_on_the_head_album = []
-squeeze_by_cheeks_album = []
-heart_album = []
-rrrrr_album = []
-be_embarrassed_album = []
-lick_album = []
-press_album = []
-take_hand_album = []
-cling_to_album = []
-chain_album = []
-dance_album = []
-hickey_album = []
-kiss_cheek_album = []
-hug_all_album = []
 
+dance_album = []
 
 gifs_album = {}
 photos_album = {}
@@ -189,12 +161,10 @@ def reloadGifs():
 
 def reloadAll():
     reloadPhotos()
-    '''
     reloadGifs()
     global audios_album
     audios_album = reloadMusic()
     print("Ready")
-    '''
 
 
 db = shelve.open("Databases/users")
@@ -307,6 +277,7 @@ while True:
                         if(command == "ударить" or command == "kick" and user_id != 0):
                             sendMessage(name_from + " ударил" + sex + " " + str(get_name(user_id, "acc")), kick_album, "photo")
 
+
                         if(command == "приветы" or command == "привет" or command == "q" and user_id != 0):
                             sendMessage(name_from + " поприветствовал" + sex + " " + str(get_name(user_id, "acc")), hi_album, "photo")
 
@@ -348,6 +319,12 @@ while True:
 
                         if(command == "рычать"):
                             sendMessage(name_from + " рычит", rrrrr_album, "photo")
+
+                        if(command == "подрочить"):
+                            sendMessage(name_from + " подрочил" + sex, None, None)
+
+                        if(command == "посасать"):
+                            sendMessage(name_from + " посасал" + sex, None, None)
 
                         if(command == "обнять всех" or command == "обнять алл"):
                             sendMessage(name_from + " обнял" + sex + " всех", hug_all_album, "photo")
