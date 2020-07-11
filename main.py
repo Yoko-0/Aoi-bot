@@ -251,10 +251,10 @@ def reloadAll():
     print("Ready")
 
 
-db = shelve.open("users")
-db_time = shelve.open("time")
-db_ban = shelve.open("ban")
-db_commands = shelve.open("commands_list")
+db = shelve.open("Databases/users")
+db_time = shelve.open("Databases/time")
+db_ban = shelve.open("Databases/ban")
+db_commands = shelve.open("Databases/commands_list")
 
 try_married = {}
 timer = {}
@@ -474,6 +474,12 @@ while True:
 
                         if(command == "грустить" or command == "sad"):
                             sendMessage(name_from + " грустит(((", sad_album, "photo")
+
+                        if(command == "подрочить"):
+                            sendMessage(name_from + " подрочил" + sex, None, None)
+
+                        if(command == "посасать"):
+                            sendMessage(name_from + " посасал" + sex, None, None)
 
                         if(command == "кусь" or command == "bite" and user_id != 0):
                             sendMessage(name_from + " ускусил" + sex + " " + str(get_name(user_id, "acc")), bite_album, "photo")
