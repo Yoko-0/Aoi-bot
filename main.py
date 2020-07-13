@@ -642,6 +642,9 @@ while True:
                         db_ban[from_id] = datetime.now()
 
                     elif(command in music_commands and not off):
+                        if(command == "музыка kz" or command == "музыка кз"):
+                            sendMessage("Наслаждайся)", audios_album["-195205545_7"], "audio")
+
                         if(command == "музыка lo-fi" or command == "музыка lofi" or command == "музыка лофи"):
                             sendMessage("Наслаждайся)", audios_album["-195205545_6"], "audio")
 
