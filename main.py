@@ -297,14 +297,19 @@ while True:
                     print()
                     print(event.obj)
 
-                    try:
-
-                        if("chat_invite_user" in event.obj['action']['type']):
+                    if('action' in event.obj.keys()):
+                        if(event.obj['action']['type'] == "chat_invite_user_by_link"):
                             answer = "Привет, @id" + str(event.obj.from_id) + "(" + str(get_name(event.obj.from_id, "nom")) + ") :з\nрада видеть тебя в нашей уютной беседке, надеюсь тебе понравится атмосфера тут и ты останешься с нами🧸🧡"
                             send_message(event.obj.peer_id, answer, None)
                             continue
-                    except:
-                        pass
+                        elif(event.obj['action']['type'] == "chat_invite_user"):
+                            answer = "Привет, @id" + str(event.obj['action']['member_id']) + "(" + str(get_name(event.obj['action']['member_id'], "nom")) + ") :з\nрада видеть тебя в нашей уютной беседке, надеюсь тебе понравится атмосфера тут и ты останешься с нами🧸🧡"
+                            send_message(event.obj.peer_id, answer, None)
+                            continue
+                        elif(event.obj['action']['type'] == "chat_kick_user"):
+                            answer = "Прощай, @id" + str(event.obj['action']['member_id']) + "(" + str(get_name(event.obj['action']['member_id'], "nom")) + ")"
+                            send_message(event.obj.peer_id, answer, None)
+                            continue
 
                     peer_id = event.obj.peer_id
                     from_id = str(event.obj.from_id)
