@@ -41,6 +41,10 @@ photos_album = {}
 audios_album = {}
 main_album = ["457240076"]
 
+
+def kick_user(peer_id, user_id):
+    vk.method("messages.removeChatUser", {"chat_id": peer_id - 2000000000, "user_id": user_id, "random_id": randint(1, 100000000000)})
+
 def getDays(time):
     time = str(time)
     length = len(time)
@@ -251,10 +255,10 @@ def reloadAll():
     print("Ready")
 
 
-db = shelve.open("Databases/users")
-db_time = shelve.open("Databases/time")
-db_ban = shelve.open("Databases/ban")
-db_commands = shelve.open("Databases/commands_list")
+db = shelve.open("databases/users")
+db_time = shelve.open("databases/time")
+db_ban = shelve.open("databases/ban")
+db_commands = shelve.open("databases/commands_list")
 
 try_married = {}
 timer = {}
@@ -262,12 +266,12 @@ timer = {}
 off = 0
 
 
-vk = vk_api.VkApi(token="927d0c2eb68bc3197ee29a3634b0de4466b1b66ec0cddbc76142138a1e1c8dc83f2b35fb8354e013c3a25")
+vk = vk_api.VkApi(token="927d0c2eb68bc3197ee29a3634b0de4466b1b66ec0cddbc76142138a1e1c8dc83f2b35fb8354e013c3a25") # bot
 vk._auth_token()
 vk.get_api()
 
 
-vk1 = vk_api.VkApi(token="beca55e59eeb78065d9c448d195ed79ea32d72e1d5c280be6a0116588df0e544a8eb29196f3b1c3487a79")
+vk1 = vk_api.VkApi(token="beca55e59eeb78065d9c448d195ed79ea32d72e1d5c280be6a0116588df0e544a8eb29196f3b1c3487a79") # me
 vk1._auth_token()
 vk1.get_api()
 
@@ -309,6 +313,7 @@ while True:
                         elif(event.obj['action']['type'] == "chat_kick_user"):
                             answer = "Прощай, @id" + str(event.obj['action']['member_id']) + "(" + str(get_name(event.obj['action']['member_id'], "nom")) + ")"
                             send_message(event.obj.peer_id, answer, None)
+                            kick_user(event.obj.peer_id, event.obj['action']['member_id'])
                             continue
 
                     peer_id = event.obj.peer_id
