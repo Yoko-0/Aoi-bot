@@ -146,10 +146,10 @@ def reloadAll():
     print("Ready")
 
 
-db = shelve.open("databases/users") #married users
-db_time = shelve.open("databases/time") #time married
-db_ban = shelve.open("databases/ban") #cooldown
-db_commands = shelve.open("databases/commands_list") # all commands
+db = shelve.open("db/users") #married users
+db_time = shelve.open("db/time") #time married
+db_ban = shelve.open("db/ban") #cooldown
+db_commands = shelve.open("db/commands_list") # all commands
 
 try_married = {}
 timer = {}
