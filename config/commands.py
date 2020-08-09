@@ -235,6 +235,27 @@ def get_dict():
                     'type': 0,
                     'media': None,
                 },
+
+                'on':
+                {
+                    'answer': ' я включена',
+                    'type': 0,
+                    'media': None,
+                },
+
+                'kick':
+                {
+                    'answer': ' я выключена',
+                    'type': 1,
+                    'media': None,
+                },
+
+                'кик':
+                {
+                    'answer': ' я выключена',
+                    'type': 1,
+                    'media': None,
+                },
             },
 
             'father':

@@ -99,39 +99,38 @@ def reloadGifs():
     dance_album = getGifs("dance")
 
 
-def getAllInfoConversations():
+def getAllInfoConversation(id):
     #conversations = vk.method("messages.getConversations", {"owner_id": -195205545, "count": 200, "offset": offset})
-    allInfoConversations = {}
     admins = []
-    conversations = ['2000000001']#, 2000000016] 2000000002 2000000019
+    #conversations = ['2000000001']#, 2000000016] 2000000002 2000000019
 
 
-    for conversation in conversations:
-        allInfoConversations[conversation] = {}
-        users = vk.method("messages.getConversationMembers", {"peer_id": conversation})
-        for user in users['items']:
-            print(user)
-            if(user['member_id'] < 0):
-                continue
+
+    conversation = {'online': 1}
+    users = vk.method("messages.getConversationMembers", {"peer_id": id})
+    for user in users['items']:
+        print(user)
+        if(user['member_id'] < 0):
+            continue
+        try:
+            acc = get_name(user['member_id'], 'acc')
+            nom = get_name(user['member_id'], 'nom')
+        except:
+            pass
+        conversation[str(user['member_id'])] = {
+                                                    'acc': acc,
+                                                    'nom': nom
+                                                    }
+        if('is_admin' in user):
             try:
-                acc = get_name(user['member_id'], 'acc')
-                nom = get_name(user['member_id'], 'nom')
+                conversation['admins']
             except:
-                pass
-            allInfoConversations[conversation][str(user['member_id'])] = {
-                                                        'acc': acc,
-                                                        'nom': nom
-                                                        }
-            if('is_admin' in user):
-                try:
-                    allInfoConversations[conversation]['admins']
-                except:
-                    allInfoConversations[conversation]['admins'] = []
+                conversation['admins'] = []
 
-                allInfoConversations[conversation]['admins'].append(str(user['member_id']))
+            conversation['admins'].append(str(user['member_id']))
 
-        print(allInfoConversations)
-        return allInfoConversations
+    print(conversation)
+    return conversation
 
 
 
@@ -143,8 +142,6 @@ def reloadAll():
     reloadPhotos()
     reloadGifs()
     global audios_album
-    global conversations
-    conversations = getAllInfoConversations()
     #audios_album = reloadMusic()
     print("Ready")
 
@@ -152,6 +149,7 @@ def reloadAll():
 db = shelve.open('db/users') #married users
 db_time = shelve.open('db/time') #time married
 db_ban = shelve.open('db/ban') #cooldown
+conversations = shelve.open('db/conversations')
 #db_commands = shelve.open('db/commands_list') # all commands
 
 
@@ -184,7 +182,6 @@ music_commands = db_commands["music_commands"]
 '''
 
 
-conversations = {}
 father = ['146389567']
 
 group_check = 0
@@ -199,6 +196,8 @@ while True:
             if event.type == VkBotEventType.MESSAGE_NEW:
                     print()
                     print(event.obj)
+
+
 
                     if('action' in event.obj.keys()):
                         if(event.obj['action']['type'] == "chat_invite_user_by_link"):
@@ -217,6 +216,11 @@ while True:
                     peer_id = str(event.obj.peer_id)
                     from_id = str(event.obj.from_id)
                     sex = get_sex(event.obj.from_id)
+
+
+                    if(peer_id not in conversations.keys()):
+                        conversations[peer_id] = getAllInfoConversation(peer_id)
+
                     name_from = conversations[peer_id][from_id]['nom']
                     message = event.obj.text.lower()
 
@@ -251,13 +255,13 @@ while True:
                     dict = conf.get_dict()
 
 
-                    if(command in dict['default']['all']):# and conversations[peer_id]['online']):
+                    if(command in dict['default']['all'] and conversations[peer_id]['online']):
                         answer = name_from + dict['default']['all'][command]['answer'] + conversations[peer_id][user_id]['acc'] + ' new bot'
                         media = photos_album[dict['default']['all'][command]['media']]
                         type = 'photo'
                         db_ban[from_id] = datetime.now()
 
-                    if(peer_id in dict.keys()): # and conversations[peer_id]['online']):
+                    if(peer_id in dict.keys() and conversations[peer_id]['online']):
                         if(command in dict[peer_id]['all']):
                             answer = name_from + dict[peer_id]['all'][command]['answer'] + conversations[peer_id][user_id]['acc'] + ' new bot'
                             media = photos_album[dict[peer_id]['all'][command]['media']]
