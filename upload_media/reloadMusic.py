@@ -13,8 +13,8 @@ def reloadMusic():
     password = "/html/body/div[9]/div[1]/div/div[2]/div[2]/div[2]/div/div/div/div[2]/form/input[8]"
     login_button = "/html/body/div[9]/div[1]/div/div[2]/div[2]/div[2]/div/div/div/div[2]/form/div[2]/button[1]"
 
-    driver.find_element_by_xpath(login).send_keys("+421951308761")
-    driver.find_element_by_xpath(password).send_keys("Baris0n01))")
+    driver.find_element_by_xpath(login).send_keys("")
+    driver.find_element_by_xpath(password).send_keys("")
     driver.find_element_by_xpath(login_button).click()
     sleep(1)
 
