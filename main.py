@@ -161,12 +161,12 @@ timer = {}
 off = 0
 
 
-vk = vk_api.VkApi(token="927d0c2eb68bc3197ee29a3634b0de4466b1b66ec0cddbc76142138a1e1c8dc83f2b35fb8354e013c3a25") #bot
+vk = vk_api.VkApi(token="") #bot
 vk._auth_token()
 vk.get_api()
 
 
-vk1 = vk_api.VkApi(token="beca55e59eeb78065d9c448d195ed79ea32d72e1d5c280be6a0116588df0e544a8eb29196f3b1c3487a79") # second account
+vk1 = vk_api.VkApi(token="") # second account
 vk1._auth_token()
 vk1.get_api()
 
